@@ -1,0 +1,3 @@
+org.xbib.elasticsearch.common.csv
+org.xbib.elasticsearch.plugin.csv
+org.xbib.elasticsearch.rest.csv

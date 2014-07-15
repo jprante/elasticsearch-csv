@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>package org.xbib.elasticsearch.common.csv;<a name="line.1"></a>
+<span class="sourceLineNo">002</span><a name="line.2"></a>
+<span class="sourceLineNo">003</span>import java.io.IOException;<a name="line.3"></a>
+<span class="sourceLineNo">004</span>import java.io.Reader;<a name="line.4"></a>
+<span class="sourceLineNo">005</span>import java.util.Iterator;<a name="line.5"></a>
+<span class="sourceLineNo">006</span>import java.util.LinkedList;<a name="line.6"></a>
+<span class="sourceLineNo">007</span>import java.util.List;<a name="line.7"></a>
+<span class="sourceLineNo">008</span>import java.util.NoSuchElementException;<a name="line.8"></a>
+<span class="sourceLineNo">009</span><a name="line.9"></a>
+<span class="sourceLineNo">010</span>public class CSVParser {<a name="line.10"></a>
+<span class="sourceLineNo">011</span><a name="line.11"></a>
+<span class="sourceLineNo">012</span>    private final CSVLexer lexer;<a name="line.12"></a>
+<span class="sourceLineNo">013</span><a name="line.13"></a>
+<span class="sourceLineNo">014</span>    private final List&lt;String&gt; row;<a name="line.14"></a>
+<span class="sourceLineNo">015</span><a name="line.15"></a>
+<span class="sourceLineNo">016</span>    private final Token reusableToken;<a name="line.16"></a>
+<span class="sourceLineNo">017</span><a name="line.17"></a>
+<span class="sourceLineNo">018</span>    public CSVParser(Reader reader) throws IOException {<a name="line.18"></a>
+<span class="sourceLineNo">019</span>        lexer = new CSVLexer(new LookAheadReader(reader), ',', '"', '"', '#', true, true);<a name="line.19"></a>
+<span class="sourceLineNo">020</span>        row = new LinkedList&lt;String&gt;();<a name="line.20"></a>
+<span class="sourceLineNo">021</span>        reusableToken = new Token();<a name="line.21"></a>
+<span class="sourceLineNo">022</span>    }<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>    public void close() throws IOException {<a name="line.24"></a>
+<span class="sourceLineNo">025</span>        lexer.close();<a name="line.25"></a>
+<span class="sourceLineNo">026</span>    }<a name="line.26"></a>
+<span class="sourceLineNo">027</span><a name="line.27"></a>
+<span class="sourceLineNo">028</span>    public long getCurrentLineNumber() {<a name="line.28"></a>
+<span class="sourceLineNo">029</span>        return lexer.getCurrentLineNumber();<a name="line.29"></a>
+<span class="sourceLineNo">030</span>    }<a name="line.30"></a>
+<span class="sourceLineNo">031</span><a name="line.31"></a>
+<span class="sourceLineNo">032</span>    public Iterator&lt;List&lt;String&gt;&gt; iterator() {<a name="line.32"></a>
+<span class="sourceLineNo">033</span>        return new Iterator&lt;List&lt;String&gt;&gt;() {<a name="line.33"></a>
+<span class="sourceLineNo">034</span>            private List&lt;String&gt; current;<a name="line.34"></a>
+<span class="sourceLineNo">035</span><a name="line.35"></a>
+<span class="sourceLineNo">036</span>            private List&lt;String&gt; getNextRow() {<a name="line.36"></a>
+<span class="sourceLineNo">037</span>                try {<a name="line.37"></a>
+<span class="sourceLineNo">038</span>                    return CSVParser.this.nextRow();<a name="line.38"></a>
+<span class="sourceLineNo">039</span>                } catch (final IOException e) {<a name="line.39"></a>
+<span class="sourceLineNo">040</span>                    throw new RuntimeException(e);<a name="line.40"></a>
+<span class="sourceLineNo">041</span>                }<a name="line.41"></a>
+<span class="sourceLineNo">042</span>            }<a name="line.42"></a>
+<span class="sourceLineNo">043</span><a name="line.43"></a>
+<span class="sourceLineNo">044</span>            public boolean hasNext() {<a name="line.44"></a>
+<span class="sourceLineNo">045</span>                if (current == null) {<a name="line.45"></a>
+<span class="sourceLineNo">046</span>                    current = getNextRow();<a name="line.46"></a>
+<span class="sourceLineNo">047</span>                }<a name="line.47"></a>
+<span class="sourceLineNo">048</span>                return current != null;<a name="line.48"></a>
+<span class="sourceLineNo">049</span>            }<a name="line.49"></a>
+<span class="sourceLineNo">050</span><a name="line.50"></a>
+<span class="sourceLineNo">051</span>            public List&lt;String&gt; next() {<a name="line.51"></a>
+<span class="sourceLineNo">052</span>                List&lt;String&gt; next = current;<a name="line.52"></a>
+<span class="sourceLineNo">053</span>                current = null;<a name="line.53"></a>
+<span class="sourceLineNo">054</span>                if (next == null) {<a name="line.54"></a>
+<span class="sourceLineNo">055</span>                    next = getNextRow();<a name="line.55"></a>
+<span class="sourceLineNo">056</span>                    if (next == null) {<a name="line.56"></a>
+<span class="sourceLineNo">057</span>                        throw new NoSuchElementException("no more rows");<a name="line.57"></a>
+<span class="sourceLineNo">058</span>                    }<a name="line.58"></a>
+<span class="sourceLineNo">059</span>                }<a name="line.59"></a>
+<span class="sourceLineNo">060</span>                return next;<a name="line.60"></a>
+<span class="sourceLineNo">061</span>            }<a name="line.61"></a>
+<span class="sourceLineNo">062</span><a name="line.62"></a>
+<span class="sourceLineNo">063</span>            public void remove() {<a name="line.63"></a>
+<span class="sourceLineNo">064</span>                throw new UnsupportedOperationException();<a name="line.64"></a>
+<span class="sourceLineNo">065</span>            }<a name="line.65"></a>
+<span class="sourceLineNo">066</span>        };<a name="line.66"></a>
+<span class="sourceLineNo">067</span>    }<a name="line.67"></a>
+<span class="sourceLineNo">068</span><a name="line.68"></a>
+<span class="sourceLineNo">069</span>    protected List&lt;String&gt; nextRow() throws IOException {<a name="line.69"></a>
+<span class="sourceLineNo">070</span>        row.clear();<a name="line.70"></a>
+<span class="sourceLineNo">071</span>        StringBuilder sb = null;<a name="line.71"></a>
+<span class="sourceLineNo">072</span>        do {<a name="line.72"></a>
+<span class="sourceLineNo">073</span>            reusableToken.reset();<a name="line.73"></a>
+<span class="sourceLineNo">074</span>            lexer.nextToken(reusableToken);<a name="line.74"></a>
+<span class="sourceLineNo">075</span>            String s = reusableToken.content.toString();<a name="line.75"></a>
+<span class="sourceLineNo">076</span>            switch (reusableToken.type) {<a name="line.76"></a>
+<span class="sourceLineNo">077</span>                case TOKEN:<a name="line.77"></a>
+<span class="sourceLineNo">078</span>                    row.add(s);<a name="line.78"></a>
+<span class="sourceLineNo">079</span>                    break;<a name="line.79"></a>
+<span class="sourceLineNo">080</span>                case EORECORD:<a name="line.80"></a>
+<span class="sourceLineNo">081</span>                    row.add(s);<a name="line.81"></a>
+<span class="sourceLineNo">082</span>                    break;<a name="line.82"></a>
+<span class="sourceLineNo">083</span>                case EOF:<a name="line.83"></a>
+<span class="sourceLineNo">084</span>                    if (reusableToken.isReady) {<a name="line.84"></a>
+<span class="sourceLineNo">085</span>                        row.add(s);<a name="line.85"></a>
+<span class="sourceLineNo">086</span>                    }<a name="line.86"></a>
+<span class="sourceLineNo">087</span>                    break;<a name="line.87"></a>
+<span class="sourceLineNo">088</span>                case INVALID:<a name="line.88"></a>
+<span class="sourceLineNo">089</span>                    throw new IOException("(line " + getCurrentLineNumber() + ") invalid parse sequence");<a name="line.89"></a>
+<span class="sourceLineNo">090</span>                case COMMENT:<a name="line.90"></a>
+<span class="sourceLineNo">091</span>                    if (sb == null) {<a name="line.91"></a>
+<span class="sourceLineNo">092</span>                        sb = new StringBuilder();<a name="line.92"></a>
+<span class="sourceLineNo">093</span>                    } else {<a name="line.93"></a>
+<span class="sourceLineNo">094</span>                        sb.append(Constants.LF);<a name="line.94"></a>
+<span class="sourceLineNo">095</span>                    }<a name="line.95"></a>
+<span class="sourceLineNo">096</span>                    sb.append(reusableToken.content);<a name="line.96"></a>
+<span class="sourceLineNo">097</span>                    reusableToken.type = Token.Type.TOKEN;<a name="line.97"></a>
+<span class="sourceLineNo">098</span>                    break;<a name="line.98"></a>
+<span class="sourceLineNo">099</span>                default:<a name="line.99"></a>
+<span class="sourceLineNo">100</span>                    throw new IllegalStateException("unexpected token type: " + reusableToken.type);<a name="line.100"></a>
+<span class="sourceLineNo">101</span>            }<a name="line.101"></a>
+<span class="sourceLineNo">102</span>        } while (reusableToken.type == Token.Type.TOKEN);<a name="line.102"></a>
+<span class="sourceLineNo">103</span>        return row;<a name="line.103"></a>
+<span class="sourceLineNo">104</span>    }<a name="line.104"></a>
+<span class="sourceLineNo">105</span><a name="line.105"></a>
+<span class="sourceLineNo">106</span>}<a name="line.106"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
