@@ -31,7 +31,6 @@ public class CSVToXContentListener extends RestResponseListener<SearchResponse> 
     @Override
     public final RestResponse buildResponse(SearchResponse response) throws Exception {
         StringWriter writer = new StringWriter();
-        Set<String> keySet = Sets.newHashSet(keys);
         if (response.getHits() != null && response.getHits().getHits() != null && response.getHits().getHits().length > 0) {
             CSVGenerator gen = new CSVGenerator(writer);
             boolean fieldNamesWritten = false;
@@ -54,6 +53,7 @@ public class CSVToXContentListener extends RestResponseListener<SearchResponse> 
                         gen.write(map.get(key));
                     }
                 } else {
+                    Set<String> keySet = Sets.newHashSet(keys);
                     Set<String> nonexisting = Sets.difference(keySet, map.keySet());
                     for (String key : list) {
                         if (map.keySet().contains(key)) {
