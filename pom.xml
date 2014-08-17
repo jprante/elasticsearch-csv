@@ -40,7 +40,7 @@
         <github.global.server>github</github.global.server>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.7</java.version>
-        <elasticsearch.version>1.2.1</elasticsearch.version>
+        <elasticsearch.version>1.3.2</elasticsearch.version>
     </properties>
 
     <dependencies>
