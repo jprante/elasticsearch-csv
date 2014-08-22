@@ -29,12 +29,13 @@ CSV values are escaped with quotes if they contain quotes or commas.
 
 | Elasticsearch version    | Plugin      | Release date |
 | ------------------------ | ----------- | -------------|
+| 1.3.2                    | 1.3.0.0     | Aug 22, 2014 |
 | 1.2.1                    | 1.2.1.1     | Jul 16, 2014 |
 
 ## Installation
 
 ```
-./bin/plugin -install csv -url http://xbib.org/repository/org/xbib/elasticsearch/plugin/elasticsearch-csv/1.2.1.1/elasticsearch-csv-1.2.1.1-plugin.zip
+./bin/plugin -install csv -url http://xbib.org/repository/org/xbib/elasticsearch/plugin/elasticsearch-csv/1.3.0.0/elasticsearch-csv-1.3.0.0-plugin.zip
 ```
 
 Do not forget to restart the node after installing.
@@ -43,6 +44,7 @@ Do not forget to restart the node after installing.
 
 | File                                  | SHA1                                     |
 | ------------------------------------- | -----------------------------------------|
+| elasticsearch-csv-1.3.0.0-plugin.zip  | c241879e0644d880dc73b81d88d30a77a3021626 |
 | elasticsearch-csv-1.2.1.1-plugin.zip  | 3750d7420eed69dbc4cfbb8bebfdfe341de05dc2 |
 
 ## Project docs
