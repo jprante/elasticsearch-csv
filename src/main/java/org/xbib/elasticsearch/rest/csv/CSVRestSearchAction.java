@@ -17,7 +17,7 @@ public class CSVRestSearchAction extends BaseRestHandler {
 
     @Inject
     public CSVRestSearchAction(Settings settings, Client client, RestController controller) {
-        super(settings, client);
+        super(settings, controller, client);
         controller.registerHandler(GET, "/_search_csv", this);
         controller.registerHandler(POST, "/_search_csv", this);
         controller.registerHandler(GET, "/{index}/_search_csv", this);
