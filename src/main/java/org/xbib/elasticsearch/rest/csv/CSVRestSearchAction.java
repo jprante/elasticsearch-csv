@@ -36,7 +36,12 @@ public class CSVRestSearchAction extends BaseRestHandler {
     public void handleRequest(final RestRequest request, final RestChannel channel, final Client client) {
         SearchRequest searchRequest = RestSearchAction.parseSearchRequest(request);
         searchRequest.listenerThreaded(false);
-        client.search(searchRequest, new CSVToXContentListener(channel, request.paramAsStringArray("keys", null)));
+        client.search(searchRequest, new CSVToXContentListener(channel,
+                request.paramAsStringArray("keys", null),
+                request.paramAsBoolean("with_index", false),
+                        request.paramAsBoolean("with_type", false),
+                        request.paramAsBoolean("with_id", false))
+        );
     }
 
 }

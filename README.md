@@ -10,6 +10,10 @@ It is recommended to use `keys` with field names that appear throughout the resu
 
 CSV values are escaped with quotes if they contain quotes or commas.
 
+There are also boolean parameters `with_index`, `with_type` and `with_id` to add metadata into the CSV rows.
+
+By using the `fields` attribute in the search, you can add internal ES fields to the CSV output, like `_timestamp` or `_parent`.
+
 ## Example
 
     curl 0:9200/ezbxml/_search_csv?keys=ezb:zdbid,ezb:license_period.ezb:available,ezb:isil,ezb:sigel,ezb:license_entry_id,ezb:ill_relevance.ezb:ill_code
@@ -29,7 +33,8 @@ CSV values are escaped with quotes if they contain quotes or commas.
 
 |Plugin      | Elasticsearch | Release date |
 |----------- | ------------- | -------------|
-| 1.4.0      | 1.4.0.0       | Aug 22, 2014 |
+| 1.4.0.1    | 1.4.0         | Feb 18, 2015 |
+| 1.4.0.0    | 1.4.0         | Aug 22, 2014 |
 | 1.3.0.0    | 1.3.2         | Aug 22, 2014 |
 | 1.2.1.1    | 1.2.1         | Jul 16, 2014 |
 
