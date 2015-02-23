@@ -40,7 +40,7 @@ By using the `fields` attribute in the search, you can add internal ES fields to
 
 ## Installation
 
-    ./bin/plugin -install csv -url http://xbib.org/repository/org/xbib/elasticsearch/plugin/elasticsearch-csv/1.4.0.0/elasticsearch-csv-1.4.0.0-plugin.zip
+    ./bin/plugin -install csv -url http://xbib.org/repository/org/xbib/elasticsearch/plugin/elasticsearch-csv/1.4.0.1/elasticsearch-csv-1.4.0.1-plugin.zip
 
 Do not forget to restart the node after installing.
 
