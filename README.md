@@ -33,6 +33,7 @@ By using the `fields` attribute in the search, you can add internal ES fields to
 
 |Plugin      | Elasticsearch | Release date |
 |----------- | ------------- | -------------|
+| 1.6.0.0    | 1.6.0         | Jul 15, 2015 |
 | 1.4.0.1    | 1.4.0         | Feb 18, 2015 |
 | 1.4.0.0    | 1.4.0         | Aug 22, 2014 |
 | 1.3.0.0    | 1.3.2         | Aug 22, 2014 |
@@ -40,7 +41,7 @@ By using the `fields` attribute in the search, you can add internal ES fields to
 
 ## Installation
 
-    ./bin/plugin -install csv -url http://xbib.org/repository/org/xbib/elasticsearch/plugin/elasticsearch-csv/1.4.0.1/elasticsearch-csv-1.4.0.1-plugin.zip
+    ./bin/plugin -install csv -url http://xbib.org/repository/org/xbib/elasticsearch/plugin/elasticsearch-csv/1.6.0.0/elasticsearch-csv-1.6.0.0-plugin.zip
 
 Do not forget to restart the node after installing.
 
