@@ -101,7 +101,7 @@ public class CSVToXContentListener extends RestResponseListener<SearchResponse> 
                 }
                 gen.close();
             }
-            return new BytesRestResponse(response.status(), "text/csv", new BytesArray(writer.toString()));
+            return new BytesRestResponse(response.status(), "text/csv", new BytesArray(writer.toString()), true );
         } catch (Throwable t) {
             logger.error(t.getMessage(), t);
             return new BytesRestResponse(channel, RestStatus.INTERNAL_SERVER_ERROR, t);
