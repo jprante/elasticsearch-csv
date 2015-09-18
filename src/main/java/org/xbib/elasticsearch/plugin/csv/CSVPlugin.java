@@ -1,17 +1,23 @@
-
 package org.xbib.elasticsearch.plugin.csv;
 
+import org.elasticsearch.common.inject.Inject;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.plugins.AbstractPlugin;
 import org.elasticsearch.rest.RestModule;
 import org.xbib.elasticsearch.rest.csv.CSVRestSearchAction;
 
 public class CSVPlugin extends AbstractPlugin {
 
+    private final Settings settings;
+
+    @Inject
+    public CSVPlugin(Settings settings) {
+        this.settings = settings;
+    }
+
     @Override
     public String name() {
-        return "csv-"
-                + Build.getInstance().getVersion() + "-"
-                + Build.getInstance().getShortHash();
+        return "csv";
     }
 
     @Override
@@ -21,7 +27,9 @@ public class CSVPlugin extends AbstractPlugin {
 
 
     public void onModule(RestModule module) {
-        module.addRestAction(CSVRestSearchAction.class);
+        if (settings.getAsBoolean("plugins.csv.enabled", true)) {
+            module.addRestAction(CSVRestSearchAction.class);
+        }
     }
 
 }

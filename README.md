@@ -29,21 +29,23 @@ By using the `fields` attribute in the search, you can add internal ES fields to
     DE-5,14808092,,5,EZB352272,
     DE-61,14808092,,61,EZB6279185,
 
-## Versions
+## Compatibility matrix
 
-|Plugin      | Elasticsearch | Release date |
-|----------- | ------------- | -------------|
-| 1.5.0.0    | 1.5.0         | Aug 13, 2015 |
-| 1.7.0.0    | 1.7.0         | Aug  1, 2015 |
-| 1.6.0.0    | 1.6.0         | Jul 15, 2015 |
-| 1.4.0.1    | 1.4.0         | Feb 18, 2015 |
-| 1.4.0.0    | 1.4.0         | Aug 22, 2014 |
-| 1.3.0.0    | 1.3.2         | Aug 22, 2014 |
-| 1.2.1.1    | 1.2.1         | Jul 16, 2014 |
+| Elasticsearch | Plugin        | Release date |
+|---------------|---------------|--------------|
+| 1.7.2         | 1.7.2.0       | Sep 18, 2015 |
+| 1.7.0         | 1.7.0.0       | Aug  1, 2015 |
+| 1.6.0         | 1.6.0.0       | Jul 15, 2015 |
+| 1.5.0         | 1.5.0.0       | Aug 13, 2015 |
+| 1.4.0         | 1.4.0.1       | Feb 18, 2015 |
+| 1.3.0         | 1.3.2.0       | Aug 22, 2014 |
+| 1.2.1         | 1.2.1.1       | Jul 16, 2014 |
 
-## Installation
+## Installation 
 
-    ./bin/plugin -install csv -url http://xbib.org/repository/org/xbib/elasticsearch/plugin/elasticsearch-csv/1.6.0.0/elasticsearch-csv-1.6.0.0-plugin.zip
+Example command
+
+    ./bin/plugin -install csv -url http://xbib.org/repository/org/xbib/elasticsearch/plugin/elasticsearch-csv/1.7.2.0/elasticsearch-csv-1.7.2.0-plugin.zip
 
 Do not forget to restart the node after installing.
 
