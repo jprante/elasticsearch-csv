@@ -1,3 +1,5 @@
+This repository will be removed soon without further notice.
+
 # Elasticsearch CSV plugin
 
 This plugin offers CSV format for REST search responses.
